@@ -8,10 +8,15 @@
 <div class="hero-section">
     <div class="container">
         <h1 class="hero-title">
-            <i class="fab fa-windows me-3"></i>Каталог товаров
+            <i class="fab fa-windows me-3"></i>
+            {% if category %}{{ category.name }}{% else %}Каталог товаров{% endif %}
         </h1>
         <p class="hero-subtitle">
-            Лицензионное программное обеспечение Microsoft по выгодным ценам
+            {% if category %}
+                {{ category.name }} - лицензионное программное обеспечение Microsoft
+            {% else %}
+                Лицензионное программное обеспечение Microsoft по выгодным ценам
+            {% endif %}
         </p>
     </div>
 </div>
@@ -43,7 +48,7 @@
             <div class="card-body">
                 <i class="fas fa-boxes feature-icon"></i>
                 <h5 class="card-title">Всего товаров</h5>
-                <h3 class="mb-0">24</h3>
+                <h3 class="mb-0">{{ products|length }}</h3>
             </div>
         </div>
     </div>
@@ -52,7 +57,7 @@
             <div class="card-body">
                 <i class="fas fa-tags feature-icon"></i>
                 <h5 class="card-title">Категории</h5>
-                <h3 class="mb-0">5</h3>
+                <h3 class="mb-0">{{ categories|length }}</h3>
             </div>
         </div>
     </div>
@@ -78,140 +83,76 @@
 
 <!-- Сетка товаров -->
 <div class="row" id="productsGrid">
-    <!-- Товар 1 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 product-card">
-            <div class="position-relative">
-                <img src="https://via.placeholder.com/300x200/0078d4/ffffff?text=Windows+11+Pro" 
-                     class="card-img-top" alt="Windows 11 Professional">
-                <div class="position-absolute top-0 end-0 m-2">
-                    <span class="badge bg-success">В наличии</span>
-                </div>
-                <div class="position-absolute top-0 start-0 m-2">
-                    <span class="badge bg-danger">-20%</span>
+    {% if products %}
+        {% for product in products %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 product-card">
+                    <div class="position-relative">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200/0078d4/ffffff?text={{ product.name|slice:':20' }}" 
+                                 class="card-img-top" alt="{{ product.name }}">
+                        {% endif %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            {% if product.available %}
+                                <span class="badge bg-success">В наличии</span>
+                            {% else %}
+                                <span class="badge bg-danger">Нет в наличии</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            <a href="{% url 'main:product_detail' product.id product.slug %}" class="text-decoration-none text-dark">
+                                {{ product.name }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small">
+                            {{ product.description|truncatewords:15|default:"Описание товара" }}
+                        </p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="h5 text-primary mb-0">{{ product.price }} ₽</span>
+                                <small class="text-muted">{{ product.category.name }}</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="rating">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="far fa-star text-warning"></i>
+                                    <span class="ms-1 text-muted small">(0)</span>
+                                </div>
+                                <small class="text-muted">{{ product.created|date:"d.m.Y" }}</small>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a href="{% url 'main:product_detail' product.id product.slug %}" class="btn btn-primary">
+                                    <i class="fas fa-eye me-2"></i>Подробнее
+                                </a>
+                                {% if product.available %}
+                                    <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-success btn-sm w-100">
+                                            <i class="fas fa-shopping-cart me-1"></i>В корзину
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Windows 11 Professional</h5>
-                <p class="card-text text-muted small">
-                    Последняя версия операционной системы Microsoft с улучшенным интерфейсом и производительностью
-                </p>
-                <div class="mt-auto">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="h5 text-primary mb-0">12,990 ₽</span>
-                        <span class="text-muted text-decoration-line-through">16,240 ₽</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="rating">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <span class="ms-1 text-muted small">(127)</span>
-                        </div>
-                        <small class="text-muted">Лицензия на 1 ПК</small>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-shopping-cart me-2"></i>В корзину
-                        </button>
-                        <button class="btn btn-outline-secondary btn-sm">
-                            <i class="fas fa-heart me-1"></i>В избранное
-                        </button>
-                    </div>
-                </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>
+                Товары в этой категории отсутствуют
             </div>
         </div>
-    </div>
-
-    <!-- Товар 2 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 product-card">
-            <div class="position-relative">
-                <img src="https://via.placeholder.com/300x200/ff6b35/ffffff?text=Office+365" 
-                     class="card-img-top" alt="Microsoft Office 365">
-                <div class="position-absolute top-0 end-0 m-2">
-                    <span class="badge bg-success">В наличии</span>
-                </div>
-            </div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Microsoft Office 365</h5>
-                <p class="card-text text-muted small">
-                    Полный пакет офисных приложений с облачным хранилищем и регулярными обновлениями
-                </p>
-                <div class="mt-auto">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="h5 text-primary mb-0">4,990 ₽</span>
-                        <small class="text-muted">/год</small>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="rating">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="far fa-star text-warning"></i>
-                            <span class="ms-1 text-muted small">(89)</span>
-                        </div>
-                        <small class="text-muted">Подписка на 1 год</small>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-shopping-cart me-2"></i>В корзину
-                        </button>
-                        <button class="btn btn-outline-secondary btn-sm">
-                            <i class="fas fa-heart me-1"></i>В избранное
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Товар 3 -->
-    <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100 product-card">
-            <div class="position-relative">
-                <img src="https://via.placeholder.com/300x200/28a745/ffffff?text=Visual+Studio" 
-                     class="card-img-top" alt="Visual Studio Professional">
-                <div class="position-absolute top-0 end-0 m-2">
-                    <span class="badge bg-warning">Ограничено</span>
-                </div>
-            </div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Visual Studio Professional</h5>
-                <p class="card-text text-muted small">
-                    Мощная среда разработки для создания приложений на различных платформах
-                </p>
-                <div class="mt-auto">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="h5 text-primary mb-0">8,490 ₽</span>
-                        <small class="text-muted">/месяц</small>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="rating">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <span class="ms-1 text-muted small">(156)</span>
-                        </div>
-                        <small class="text-muted">Подписка</small>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-shopping-cart me-2"></i>В корзину
-                        </button>
-                        <button class="btn btn-outline-secondary btn-sm">
-                            <i class="fas fa-heart me-1"></i>В избранное
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endif %}
 </div>
 
 <!-- Пагинация -->
