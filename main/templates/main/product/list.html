@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Каталог товаров - Windows Shop{% endblock %}
+
+{% block content %}
+<!-- Героическая секция -->
+<div class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">
+            <i class="fab fa-windows me-3"></i>Каталог товаров
+        </h1>
+        <p class="hero-subtitle">
+            Лицензионное программное обеспечение Microsoft по выгодным ценам
+        </p>
+    </div>
+</div>
+
+<!-- Фильтры и поиск -->
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Поиск товаров..." id="searchInput">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <select class="form-select" id="categoryFilter">
+            <option value="">Все категории</option>
+            <option value="windows">Windows</option>
+            <option value="office">Microsoft Office</option>
+            <option value="development">Разработка</option>
+        </select>
+    </div>
+</div>
+
+<!-- Статистика -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center border-0 bg-primary text-white">
+            <div class="card-body">
+                <i class="fas fa-boxes feature-icon"></i>
+                <h5 class="card-title">Всего товаров</h5>
+                <h3 class="mb-0">24</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-0 bg-success text-white">
+            <div class="card-body">
+                <i class="fas fa-tags feature-icon"></i>
+                <h5 class="card-title">Категории</h5>
+                <h3 class="mb-0">5</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-0 bg-warning text-white">
+            <div class="card-body">
+                <i class="fas fa-star feature-icon"></i>
+                <h5 class="card-title">Рейтинг</h5>
+                <h3 class="mb-0">4.8</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-0 bg-info text-white">
+            <div class="card-body">
+                <i class="fas fa-users feature-icon"></i>
+                <h5 class="card-title">Клиентов</h5>
+                <h3 class="mb-0">1,250</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Сетка товаров -->
+<div class="row" id="productsGrid">
+    <!-- Товар 1 -->
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 product-card">
+            <div class="position-relative">
+                <img src="https://via.placeholder.com/300x200/0078d4/ffffff?text=Windows+11+Pro" 
+                     class="card-img-top" alt="Windows 11 Professional">
+                <div class="position-absolute top-0 end-0 m-2">
+                    <span class="badge bg-success">В наличии</span>
+                </div>
+                <div class="position-absolute top-0 start-0 m-2">
+                    <span class="badge bg-danger">-20%</span>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Windows 11 Professional</h5>
+                <p class="card-text text-muted small">
+                    Последняя версия операционной системы Microsoft с улучшенным интерфейсом и производительностью
+                </p>
+                <div class="mt-auto">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="h5 text-primary mb-0">12,990 ₽</span>
+                        <span class="text-muted text-decoration-line-through">16,240 ₽</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rating">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="ms-1 text-muted small">(127)</span>
+                        </div>
+                        <small class="text-muted">Лицензия на 1 ПК</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i>В корзину
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-heart me-1"></i>В избранное
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Товар 2 -->
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 product-card">
+            <div class="position-relative">
+                <img src="https://via.placeholder.com/300x200/ff6b35/ffffff?text=Office+365" 
+                     class="card-img-top" alt="Microsoft Office 365">
+                <div class="position-absolute top-0 end-0 m-2">
+                    <span class="badge bg-success">В наличии</span>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Microsoft Office 365</h5>
+                <p class="card-text text-muted small">
+                    Полный пакет офисных приложений с облачным хранилищем и регулярными обновлениями
+                </p>
+                <div class="mt-auto">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="h5 text-primary mb-0">4,990 ₽</span>
+                        <small class="text-muted">/год</small>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rating">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                            <span class="ms-1 text-muted small">(89)</span>
+                        </div>
+                        <small class="text-muted">Подписка на 1 год</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i>В корзину
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-heart me-1"></i>В избранное
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Товар 3 -->
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 product-card">
+            <div class="position-relative">
+                <img src="https://via.placeholder.com/300x200/28a745/ffffff?text=Visual+Studio" 
+                     class="card-img-top" alt="Visual Studio Professional">
+                <div class="position-absolute top-0 end-0 m-2">
+                    <span class="badge bg-warning">Ограничено</span>
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Visual Studio Professional</h5>
+                <p class="card-text text-muted small">
+                    Мощная среда разработки для создания приложений на различных платформах
+                </p>
+                <div class="mt-auto">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="h5 text-primary mb-0">8,490 ₽</span>
+                        <small class="text-muted">/месяц</small>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="rating">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="ms-1 text-muted small">(156)</span>
+                        </div>
+                        <small class="text-muted">Подписка</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-shopping-cart me-2"></i>В корзину
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-heart me-1"></i>В избранное
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Пагинация -->
+<nav aria-label="Навигация по страницам" class="mt-5">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+        </li>
+        <li class="page-item active">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Дополнительные стили -->
+<style>
+.product-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.rating i {
+    font-size: 0.9rem;
+}
+
+.input-group-text {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 120, 212, 0.25);
+}
+
+.page-link {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.page-link:hover {
+    color: var(--secondary-color);
+    background-color: rgba(0, 120, 212, 0.1);
+    border-color: var(--primary-color);
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.5em 0.75em;
+}
+
+#searchInput {
+    border-radius: 0 25px 25px 0;
+}
+
+#categoryFilter {
+    border-radius: 25px;
+}
+</style>
+
+<!-- JavaScript для интерактивности -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Поиск товаров
+    const searchInput = document.getElementById('searchInput');
+    const productsGrid = document.getElementById('productsGrid');
+    
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const productCards = productsGrid.querySelectorAll('.product-card');
+        
+        productCards.forEach(card => {
+            const title = card.querySelector('.card-title').textContent.toLowerCase();
+            const description = card.querySelector('.card-text').textContent.toLowerCase();
+            
+            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                card.parentElement.style.display = 'block';
+            } else {
+                card.parentElement.style.display = 'none';
+            }
+        });
+    });
+    
+    // Анимация добавления в корзину
+    const addToCartButtons = document.querySelectorAll('.btn-primary');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const originalText = this.innerHTML;
+            this.innerHTML = '<span class="loading"></span> Добавляем...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check me-2"></i>Добавлено!';
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.classList.remove('btn-success');
+                    this.classList.add('btn-primary');
+                    this.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+    });
+    
+    // Анимация избранного
+    const favoriteButtons = document.querySelectorAll('.btn-outline-secondary');
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fas')) {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                this.classList.remove('btn-outline-danger');
+                this.classList.add('btn-outline-secondary');
+            } else {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                this.classList.remove('btn-outline-secondary');
+                this.classList.add('btn-outline-danger');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
